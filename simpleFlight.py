@@ -57,9 +57,21 @@ def armAndTakeoff(targetHeight):
     print("Target altitude of %d has been reached"%targetHeight)
     return None
 
+def land():
+    vehicle.mode = VehicleMode("LAND")
+    while vehicle.mode != 'LAND':
+        print("Waiting for drone to enter LAND mode")
+        time.sleep(1)
+    print("Landing Drone")
+    while vehicle.location.global_relative_frame.alt > .5:
+        print("Current Altitude: %d"%vehicle.location.global_relative_frame.alt)
+        time.sleep(2)
+    print("Vehicle has landed")
+    return None
     
 #####Main Excecutable######
 vehicle = connectMyCopter()
 print("Vehicle is connected")
 armAndTakeoff(10)
+land()
 vehicle.close()
